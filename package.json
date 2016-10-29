@@ -4,7 +4,8 @@
   "description": "Lint file name formatting",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
+    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
+    "posttest": "eslint ."
   },
   "repository": {
     "url": "git@github.com:pietvanzoen/file-name-linter.git",
