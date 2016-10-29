@@ -1,50 +1,92 @@
-const Matchers = require('../src/matchers');
+const _ = require('lodash');
+const matchers = require('../lib/matchers');
 
-describe('Matchers', () => {
+describe('matchers', () => {
+  afterEach(() => matchers.resetMatchers());
 
-    it('isPascalCase', () => {
-      expect(Matchers.isPascalCase('PasCalCaseExample')).toBe(true);
-      expect(Matchers.isPascalCase('Pascalcase')).toBe(true);
-      expect(Matchers.isPascalCase('NPSCampaignCell')).toBe(true);
-      expect(Matchers.isPascalCase('FooNPSCampaignCell')).toBe(true);
-      expect(Matchers.isPascalCase('camelCaseExample')).toBe(false);
-      expect(Matchers.isPascalCase('kabab-case-example')).toBe(false);
-      expect(Matchers.isPascalCase('Foo-barBaz_')).toBe(false);
+  describe('::addMatcher', () => {
+    describe('argument validation', () => {
+      it('throws if name is not a string', function() {
+        expect(() => matchers.addMatcher(1, 'foo', _.noop)).toThrowError(/invalid call signature/);
+        expect(() => matchers.addMatcher('bar', 'foo', _.noop)).not.toThrowError(/invalid call signature/);
+      });
+      it('throws if description is not a string', function() {
+        expect(() => matchers.addMatcher('foo', null, _.noop)).toThrowError(/invalid call signature/);
+        expect(() => matchers.addMatcher('bar', 'foo', _.noop)).not.toThrowError(/invalid call signature/);
+      });
+      it('throws if matcher is not a function or regex', function() {
+        expect(() => matchers.addMatcher('foo', 'bar', null)).toThrowError(/invalid call signature/);
+        expect(() => matchers.addMatcher('bar', 'foo', _.noop)).not.toThrowError(/invalid call signature/);
+        expect(() => matchers.addMatcher('bar', 'foo', /foo/)).not.toThrowError(/invalid call signature/);
+      });
     });
 
-    it('isCamelCase', () => {
-      expect(Matchers.isCamelCase('camelCaseExample')).toBe(true);
-      expect(Matchers.isCamelCase('foobar')).toBe(true);
-      expect(Matchers.isCamelCase('PasCalCaseExample')).toBe(false);
-      expect(Matchers.isCamelCase('kabab-case-example')).toBe(false);
-      expect(Matchers.isCamelCase('_fooBarBaz')).toBe(false);
+    it('it adds the given matcher to available matchers', () => {
+      let name = 'foo';
+      let description = 'foo';
+      let tester = () => {};
+      matchers.addMatcher(name, description, tester);
+      let matcher = matchers.getMatcher(name);
+      expect(matcher).toBe(tester);
+      expect(matchers.getDescription(matcher)).toBe(description);
     });
 
-    it('isKebabCase', () => {
-      expect(Matchers.isKebabCase('kabab-case-example')).toBe(true);
-      expect(Matchers.isKebabCase('foobarbaz')).toBe(true);
-      expect(Matchers.isKebabCase('PasCalCaseExample')).toBe(false);
-      expect(Matchers.isKebabCase('camelCaseExample')).toBe(false);
-      expect(Matchers.isKebabCase('Foo-bar-Baz')).toBe(false);
-      expect(Matchers.isKebabCase('foO_bar-Baz')).toBe(false);
-      expect(Matchers.isKebabCase('_does-not-match')).toBe(false);
-      expect(Matchers.isKebabCase('does-not-match_')).toBe(false);
-      expect(Matchers.isKebabCase('i-does-match')).toBe(true);
+    it('wraps regex matchers in a function', function() {
+      matchers.addMatcher('foo', 'foo', /foo/);
+      expect(matchers.getMatcher('foo')('foo')).toBe(true);
+      expect(matchers.getMatcher('foo')('bar')).toBe(false);
     });
 
-    it('isPrivateKebabCase', () => {
-      expect(Matchers.isPrivateKebabCase('_this-matches')).toBe(true);
-      expect(Matchers.isPrivateKebabCase('this-does-not-match')).toBe(false);
+    it('matcher names must be unique', function() {
+      matchers.addMatcher('foo', 'foo', _.noop);
+      expect(() => matchers.addMatcher('foo', 'foo', _.noop)).toThrowError(/already exists/);
     });
+  });
 
-    it('getFileName', () => {
-      expect(Matchers.getFileName('src/projects/ubWeb/feedback/components/summary-pane/SummaryPane.ts')).toBe('SummaryPane');
-      expect(Matchers.getFileName('src/projects/ubWeb/feedback/components/summary-pane/test/SummaryPane.unit.spec.ts')).toBe('SummaryPane');
+  describe('getMatcher', () => {
+    it('returns matcher with given name', function() {
+      let fooMatcher = () => {};
+      let barMatcher = () => {};
+      matchers.addMatcher('foo', 'bar', fooMatcher);
+      matchers.addMatcher('barbaz', 'bar', barMatcher);
+      expect(matchers.getMatcher('foo')).toBe(fooMatcher);
+      expect(matchers.getMatcher('barbaz')).toBe(barMatcher);
     });
-
-    it('getFileExtension', () => {
-      expect(Matchers.getFileExtension('foo/bar/WibbleWobble.ts')).toBe('ts');
-      expect(Matchers.getFileExtension('foo/bar/WibbleWobble.unit.spec.ts')).toBe('unit.spec.ts');
+    it('throws if matcher is not available', function() {
+      expect(() => matchers.getMatcher('wibble')).toThrowError(/unknown matcher "wibble"/i);
     });
+  });
 
+  describe('getMatcherDescription', () => {
+    it('returns the given matchers description', function() {
+      let desc = matchers.getDescription(matchers.getMatcher('camelcase'));
+      expect(desc).toBe('camel case');
+    });
+  });
+
+  describe('resetMatchers', () => {
+    it('resets matchers to defaults', function() {
+      matchers.addMatcher('foo', 'foo', _.noop);
+      matchers.resetMatchers();
+      expect(() => matchers.getMatcher('foo')).toThrowError(/unknown matcher/i);
+    });
+  });
+
+  describe('makeFileNameMatcher', () => {
+    it('returns a function that invokes matcher with file/folder name only', function() {
+      let matcher = _.identity;
+      let wrappedMatcher = matchers.makeFileNameMatcher(matcher);
+      expect(wrappedMatcher('foo/bar/baz')).toBe('baz');
+      expect(wrappedMatcher('foo/bar/baz.js')).toBe('baz');
+      expect(wrappedMatcher('foo/bar/baz.unit.spec.js')).toBe('baz');
+      expect(wrappedMatcher('foobar')).toBe('foobar');
+    });
+  });
+
+  it('default matchers are installed', () => {
+    expect(typeof matchers.getMatcher('camelcase')).toBe('function');
+    expect(typeof matchers.getMatcher('pascalcase')).toBe('function');
+    expect(typeof matchers.getMatcher('kebabcase')).toBe('function');
+    expect(typeof matchers.getMatcher('privatekebabcase')).toBe('function');
+  });
 });

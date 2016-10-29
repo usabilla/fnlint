@@ -1,11 +1,11 @@
 module.exports = function () {
   return {
-    files: ['src/**/*.js'],
-    tests: ['test/**/*.spec.js'],
+    files: ['lib/**/*.js'],
+    tests: ['test/**/*.js'],
     testFramework: 'jasmine',
     env: {
       type: 'node',
-      runner: 'node'
+      runner: '/Users/piet/.nvm/versions/node/v6.2.2/bin/node'
     }
   };
 };
