@@ -35,7 +35,7 @@ describe('console reporter', () => {
     beforeEach(function() {
       this.groupResults = {
         src: '*.js',
-        matcherName: 'camel case',
+        matcherDescription: 'camel case',
         passing: [],
         failing: []
       };
@@ -55,7 +55,10 @@ describe('console reporter', () => {
 
       it('logs a header with failing tests for given test', function() {
         consoleReporter.groupReporter(this.groupResults);
-        expect(this.mostRecentLog()).toBe('\n*.js should be camel case format\nbar-baz.js\nbaz-qux.js');
+        expect(this.mostRecentLog()).toContain('*.js');
+        expect(this.mostRecentLog()).toContain('camel case');
+        expect(this.mostRecentLog()).toContain('baz-qux.js');
+        expect(this.mostRecentLog()).toContain('bar-baz.js');
       });
     });
 

@@ -60,7 +60,7 @@ describe('matchers', () => {
   describe('getMatcherDescription', () => {
     it('returns the given matchers description', function() {
       let desc = matchers.getDescription(matchers.getMatcher('camelcase'));
-      expect(desc).toBe('camel case');
+      expect(desc).toBe('should be camel case format');
     });
   });
 
