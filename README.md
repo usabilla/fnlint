@@ -1,7 +1,7 @@
 # file-name-linter
 Lint file name formatting
 
-## Usage
+## Usage (NOT ALL IMPLEMENTED)
 
 ```js
 const fnlint = require('fnlint');
