@@ -1,4 +1,4 @@
-# file-name-linter
+# file-name-linter [![CircleCI branch](https://img.shields.io/circleci/project/github/usabilla/file-name-linter/master.svg?style=flat-square)](https://circleci.com/gh/usabilla/file-name-linter/tree/master) [![Coveralls branch](https://img.shields.io/coveralls/usabilla/file-name-linter/master.svg?style=flat-square)](https://coveralls.io/github/usabilla/file-name-linter?branch=master)
 Lint file name formatting.
 
 ## Installation
