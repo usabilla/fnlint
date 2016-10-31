@@ -40,9 +40,9 @@ fnlint({
 
 #### Custom matchers
 ```js
-fnlint('src/**/*.unit.js', /custom regex/);
-fnlint('src/**/*.unit.js', (string) => {
-  /* custom matcher */
+fnlint({
+  'src/**/*.unit.js', /custom regex/,
+  'src/**/*.js', (filePath) => { /* custom matching */ }
 });
 ```
 
