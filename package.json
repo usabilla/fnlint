@@ -4,7 +4,7 @@
   "description": "Lint file name formatting",
   "main": "lib/fnlint.js",
   "engines": {
-    "node": ">=4.4.5"
+    "node": ">=4.0.0"
   },
   "scripts": {
     "test": "./scripts/test.sh"
