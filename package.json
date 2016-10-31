@@ -27,7 +27,6 @@
     "istanbul": "^0.4.5",
     "jasmine": "^2.5.2",
     "jasmine-reporters": "^2.2.0",
-    "jscoverage-reporter": "^0.1.0",
     "proxyquire": "^1.7.10"
   }
 }

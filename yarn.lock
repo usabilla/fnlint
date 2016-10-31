@@ -801,10 +801,6 @@ jsbn@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.0.tgz#650987da0dd74f4ebf5a11377a2aa2d273e97dfd"
 
-jscoverage-reporter:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/jscoverage-reporter/-/jscoverage-reporter-0.1.0.tgz#d297bf061021c880dbd0fa00e5d7db2ec633deed"
-
 json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
