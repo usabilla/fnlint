@@ -48,5 +48,6 @@ fnlint('src/**/*.unit.js', (string) => {
 
 ## TODO
 - [ ] Custom reporters
+- [ ] Command line interface
 - [ ] Single lint package call signature e.g. `fnlint('src/**/*.js', 'pascalcase');`
 - [ ] Case insensitive matcher name
