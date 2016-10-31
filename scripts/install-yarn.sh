@@ -2,7 +2,7 @@
 set -e
 
 if [ ! -e ~/.yarn ]; then
-  curl -o- -L https://yarnpkg.com/install.sh | bash;
+  curl -o- -L https://yarnpkg.com/install.sh | TERM=xterm bash;
 else
   echo "Yarn already installed";
   echo "Adding yarn to .bashrc"
