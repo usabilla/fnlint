@@ -14,9 +14,9 @@
   "author": "pietvanzoen <pietvanzoen@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.1.2",
     "colors": "^1.1.2",
     "glob": "^7.1.1",
+    "immutable": "^3.8.1",
     "lodash": "^4.16.4"
   },
   "devDependencies": {

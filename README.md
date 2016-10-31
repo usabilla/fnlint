@@ -1,49 +1,52 @@
 # file-name-linter
-Lint file name formatting
+Lint file name formatting.
 
-## Usage (NOT ALL IMPLEMENTED)
+## Installation
 
-```js
-const fnlint = require('fnlint');
+With npm:
 
-fnlint('src/**/*.js', 'pascalcase');
-fnlint('src/**/*.ts', 'camelcase');
-fnlint('src/**/*.scss', 'kebabcase');
-fnlint('src/**/*.html', 'snakecase');
+```
+npm i fnlint --save
 ```
 
-### Custom matchers
+With yarn:
+
+```
+yarn add fnlint 
+```
+
+## Usage
+
+### API
+
+#### `fnlint(options: {}, callback: Function(error: Error, results: {})) => Void`
+- run linter on given options
+- callback is called once linting completes
+
+#### `fnlint.sync(options: {}) => results: {}`
+- synchronous version
+
+#### `fnlint.promise(options: {}) => Promise(results: {})`
+- promise version
+
+### Examples
+
+```js
+fnlint({
+  'src/**/*.js': 'camelcase',
+  'src/**/*.scss': 'kebabcase'
+});
+````
+
+#### Custom matchers
 ```js
 fnlint('src/**/*.unit.js', /custom regex/);
 fnlint('src/**/*.unit.js', (string) => {
   /* custom matcher */
 });
-fnlint.addMatcher('matcher name 1', (string) => {
-  /* custom matcher */
-});
-fnlint.addMatcher('matcher name 2', /custom regex/);
-fnlint('src/**/*.foo.bar', 'matcher name 1');
-fnlint('src/**/*.baz.qux', 'matcher name 2');
 ```
 
-### Bulk linting
-```js
-fnlint({
-  'src/**/*.js': 'camelcase',
-  'src/**/*.scss': 'kebabcase'
-}, {
-  reporter: false
-});
-```
-
-### Custom reporters
-```js
-fnlint.useReporter((results) => {
-  /* custom reporting here */
-  return 'foo bar';
-});
-fnlint('src/**/*.js', 'camelCase');
-// => 'foo bar'
-
-fnlint.useReporter(fnlint.reporters.console)
-```
+## TODO
+- [ ] Custom reporters
+- [ ] Single lint package call signature e.g. `fnlint('src/**/*.js', 'pascalcase');`
+- [ ] Case insensitive matcher name

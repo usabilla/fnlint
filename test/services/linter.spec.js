@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const linter = require('../lib/linter');
-const matchers = require('../lib/matchers');
+const linter = require('../../lib/services/linter');
+const matchers = require('../../lib/services/matchers');
+const LintPackage = require('../../lib/models/lint-package.js');
 
 describe('linter', () => {
 
@@ -21,16 +22,16 @@ describe('linter', () => {
       matchers.addMatcher(this.testMatcherB.name, this.testMatcherB.description, this.testMatcherB.matcher);
       this.passingFilesA = ['abc.js', 'abcd.js', 'abcde.js'];
       this.passingFilesB = ['bcd.js', 'bcde.js'];
-      this.testLintPackageA = {
+      this.testLintPackageA = LintPackage({
         src: 'a/*.js',
         matcherName: this.testMatcherA.name,
         files: this.passingFilesA.concat(this.passingFilesB)
-      };
-      this.testLintPackageB = {
+      });
+      this.testLintPackageB = LintPackage({
         src: 'b/*.js',
-        matcherName: this.testMatcherB.name,
-        files: this.passingFilesA.concat(this.passingFilesB)
-      };
+          matcherName: this.testMatcherB.name,
+          files: this.passingFilesA.concat(this.passingFilesB)
+      });
     });
 
     afterEach(() => matchers.resetMatchers());
@@ -46,33 +47,17 @@ describe('linter', () => {
       expect(testReportA.files).toBe(this.testLintPackageA.files);
       expect(testReportA.matcherName).toBe(this.testLintPackageA.matcherName);
       expect(testReportA.matcherDescription).toBe(this.testMatcherA.description);
-      expect(testReportA.passing).toEqual(this.passingFilesA);
-      expect(testReportA.failing).toEqual(this.passingFilesB);
+      expect(testReportA.passing.toJS()).toEqual(this.passingFilesA);
+      expect(testReportA.failing.toJS()).toEqual(this.passingFilesB);
 
       let testReportB = report[1];
       expect(testReportB.src).toBe(this.testLintPackageB.src);
       expect(testReportB.files).toBe(this.testLintPackageB.files);
       expect(testReportB.matcherName).toBe(this.testLintPackageB.matcherName);
       expect(testReportB.matcherDescription).toBe(this.testMatcherB.description);
-      expect(testReportB.passing).toEqual(this.passingFilesB);
-      expect(testReportB.failing).toEqual(this.passingFilesA);
+      expect(testReportB.passing.toJS()).toEqual(this.passingFilesB);
+      expect(testReportB.failing.toJS()).toEqual(this.passingFilesA);
 
-    });
-  });
-
-  describe('::lintFiles', () => {
-    let files = [
-      'foo/bar-baz.js',
-      'foo/bar/bazQux.js',
-      'foo/barBaz.js',
-    ];
-    it('lints a list of files', function() {
-      var results = linter.lintFiles(matchers.getMatcher('camelcase'), files);
-      expect(results.failing.length).toBe(1);
-      expect(results.failing).toContain(files[0]);
-      expect(results.passing.length).toBe(2);
-      expect(results.passing).toContain(files[1]);
-      expect(results.passing).toContain(files[2]);
     });
   });
 

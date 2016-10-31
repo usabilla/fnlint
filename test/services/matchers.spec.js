@@ -1,5 +1,6 @@
 const _ = require('lodash');
-const matchers = require('../lib/matchers');
+const matchers = require('../../lib/services/matchers');
+const LintPackage = require('../../lib/models/lint-package.js');
 
 describe('matchers', () => {
   afterEach(() => matchers.resetMatchers());
@@ -57,10 +58,13 @@ describe('matchers', () => {
     });
   });
 
-  describe('getMatcherDescription', () => {
+  describe('getDescription', () => {
     it('returns the given matchers description', function() {
       let desc = matchers.getDescription(matchers.getMatcher('camelcase'));
       expect(desc).toBe('should be camel case format');
+    });
+    it('throws error if given matcher is not a function', function() {
+      expect(() => matchers.getDescription('foo')).toThrowError(/expected a matcher function/i);
     });
   });
 
@@ -88,5 +92,75 @@ describe('matchers', () => {
     expect(typeof matchers.getMatcher('pascalcase')).toBe('function');
     expect(typeof matchers.getMatcher('kebabcase')).toBe('function');
     expect(typeof matchers.getMatcher('privatekebabcase')).toBe('function');
+  });
+
+  describe('updatePackageMatcher', () => {
+    it('updates the given LintPackage with matcher and description', function() {
+      matchers.addMatcher('foo', 'bar', _.noop);
+      let lintPackage = matchers.updatePackageMatcher(LintPackage({matcherName: 'foo'}));
+      expect(lintPackage.matcher).toBe(_.noop);
+      expect(lintPackage.matcherDescription).toBe('bar');
+    });
+
+    describe('when matcherName is regex', () => {
+      beforeEach(function() {
+        this.regexMatcher = /foo\/bar/;
+        this.lintPackage = LintPackage({
+          matcherName: this.regexMatcher
+        });
+      });
+
+      it('creates a regex test function', function() {
+        let lintPackage = matchers.updatePackageMatcher(this.lintPackage);
+        expect(lintPackage.matcher('foo/bar')).toBe(true);
+        expect(lintPackage.matcher('bar/foo')).toBe(false);
+      });
+
+      it('sets matcherName to regex string', function() {
+        let lintPackage = matchers.updatePackageMatcher(this.lintPackage);
+        expect(lintPackage.matcherName).toBe('/foo\\/bar/');
+      });
+
+      it('sets description for regex', function() {
+        let lintPackage = matchers.updatePackageMatcher(this.lintPackage);
+        expect(lintPackage.matcherDescription).toBe('should match regex /foo\\/bar/');
+      });
+    });
+
+    describe('when matcherName is a function', () => {
+      beforeEach(function() {
+        this.functionMatcher = function customMatcher() {};
+        this.lintPackage = LintPackage({
+          matcherName: this.functionMatcher
+        });
+      });
+
+      it('sets matcher as given function', function() {
+        let lintPackage = matchers.updatePackageMatcher(this.lintPackage);
+        expect(lintPackage.matcher).toBe(this.functionMatcher);
+      });
+
+      it('sets matcherName to the string of given function', function() {
+        let lintPackage = matchers.updatePackageMatcher(this.lintPackage);
+        expect(lintPackage.matcherName).toBe(this.functionMatcher.toString());
+      });
+
+      it('sets matcherDescription to name of function if available', function() {
+        let lintPackage = matchers.updatePackageMatcher(this.lintPackage);
+        expect(lintPackage.matcherDescription).toBe('customMatcher');
+      });
+
+      it('sets matcherDescription to "custom matcher" when function name is not available', function() {
+        let lintPackage = matchers.updatePackageMatcher(LintPackage({ matcherName: ()=>{}}));
+        expect(lintPackage.matcherDescription).toBe('custom matcher');
+      });
+    });
+
+    it('throws when matcher is not a string, regex, or function', function() {
+      expect(() => {
+        matchers.updatePackageMatcher(LintPackage({ matcherName: {}}));
+      }).toThrowError(/unknown matcher/i);
+    });
+
   });
 });

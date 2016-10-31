@@ -1,23 +1,24 @@
-const linter = require('../lib/linter');
+const linter = require('../lib/services/linter');
 const fnlint = require('../lib/fnlint');
 const proxyquire = require('proxyquire');
 const glob = require('glob');
+const LintPackage = require('../lib/models/lint-package.js');
 
 const TEST_FILES = './test/test-files/*.js';
 
 describe('fnlint', () => {
   let lintResults = {pass: true};
-  let expectedLintArgs = [
-    { src: TEST_FILES, files: glob.sync(TEST_FILES), matcherName: 'camelcase' }
-  ];
+  let expectedLintPackage = LintPackage({ src: TEST_FILES, files: glob.sync(TEST_FILES), matcherName: 'camelcase'});
 
   beforeEach(function() {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 100;
     spyOn(linter, 'lint').and.returnValue(lintResults);
   });
 
   it('invokes lint with fetched file names', function(done) {
     fnlint({[TEST_FILES]: 'camelcase'}, () => {
-      expect(linter.lint).toHaveBeenCalledWith(expectedLintArgs);
+      let lintPackages = linter.lint.calls.mostRecent().args[0];
+      expect(expectedLintPackage.toJS()).toEqual(lintPackages[0].toJS());
       done();
     });
   });
@@ -29,13 +30,11 @@ describe('fnlint', () => {
     });
   });
 
-  it('returns async errors and does not give report', function(done) {
+  it('returns async errors', function(done) {
     let globError = new Error('glob error');
-    let globMock = jasmine.createSpy('glob').and.callFake((pattern, callback) => {
-      callback(globError);
-    });
+    let globPromiseMock = jasmine.createSpy('globPromise').and.returnValue(Promise.reject(globError));
     let fnlintGlobMocked = proxyquire('../lib/fnlint', {
-      glob: globMock
+      './util/glob': { promise: globPromiseMock }
     });
     fnlintGlobMocked({'foo': 'camelcase'}, (err) => {
       expect(err).toBe(globError);
@@ -43,15 +42,25 @@ describe('fnlint', () => {
     })
   });
 
-  it('invokes the default reporter with the linting results', function() {
-
-  });
-
   describe('sync', () => {
     it('lints synchronously', function() {
       var results = fnlint.sync({[TEST_FILES]: 'camelcase'});
-      expect(linter.lint).toHaveBeenCalledWith(expectedLintArgs);
+      let lintPackages = linter.lint.calls.mostRecent().args[0];
+      expect(expectedLintPackage.toJS()).toEqual(lintPackages[0].toJS());
       expect(results).toBe(lintResults);
+    });
+  });
+
+  describe('promise', () => {
+    it('lints and returns a promise', function(done) {
+      fnlint.promise({[TEST_FILES]: 'camelcase'})
+        .then((results) => {
+          let lintPackages = linter.lint.calls.mostRecent().args[0];
+          expect(expectedLintPackage.toJS()).toEqual(lintPackages[0].toJS());
+          expect(results).toBe(lintResults);
+          done();
+        })
+        .catch(done.fail);
     });
   });
 
