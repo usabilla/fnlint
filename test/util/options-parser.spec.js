@@ -1,4 +1,6 @@
-const optionsParser = require('../../lib/util/optionsParser');
+'use strict';
+
+const optionsParser = require('../../lib/util/options-parser');
 
 describe('optionsParser', () => {
 

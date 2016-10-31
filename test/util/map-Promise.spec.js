@@ -1,4 +1,6 @@
-const mapPromise = require('../../lib/util/mapPromise');
+'use strict';
+
+const mapPromise = require('../../lib/util/map-promise');
 
 describe('mapPromise', () => {
 

@@ -2,10 +2,13 @@
   "name": "file-name-linter",
   "version": "0.0.0",
   "description": "Lint file name formatting",
-  "main": "index.js",
+  "main": "lib/fnlint.js",
+  "engines": {
+    "node": ">=4.4.5"
+  },
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
-    "posttest": "eslint ."
+    "posttest": "eslint . && ./scripts/lint-filenames.js"
   },
   "repository": {
     "url": "git@github.com:pietvanzoen/file-name-linter.git",

@@ -8,6 +8,12 @@
     "es6": true
   },
   "rules": {
-    "arrow-parens": ["error"]
+    "arrow-parens": [
+      "error"
+    ],
+    "strict": [
+      "error",
+      "global"
+    ]
   }
 }

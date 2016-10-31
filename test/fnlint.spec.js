@@ -1,8 +1,11 @@
+'use strict';
+
 const linter = require('../lib/services/linter');
 const fnlint = require('../lib/fnlint');
 const proxyquire = require('proxyquire');
 const glob = require('glob');
 const LintPackage = require('../lib/models/lint-package.js');
+const reporters = require('../lib/services/reporters');
 
 const TEST_FILES = './test/test-files/*.js';
 
@@ -11,6 +14,7 @@ describe('fnlint', () => {
   let expectedLintPackage = LintPackage({ src: TEST_FILES, files: glob.sync(TEST_FILES), matcherName: 'camelcase'});
 
   beforeEach(function() {
+    spyOn(reporters.consoleReporter, 'log');
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 100;
     spyOn(linter, 'lint').and.returnValue(lintResults);
   });

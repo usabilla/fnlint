@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const linter = require('../../lib/services/linter');
 const matchers = require('../../lib/services/matchers');
@@ -47,17 +49,29 @@ describe('linter', () => {
       expect(testReportA.files).toBe(this.testLintPackageA.files);
       expect(testReportA.matcherName).toBe(this.testLintPackageA.matcherName);
       expect(testReportA.matcherDescription).toBe(this.testMatcherA.description);
-      expect(testReportA.passing.toJS()).toEqual(this.passingFilesA);
-      expect(testReportA.failing.toJS()).toEqual(this.passingFilesB);
+      expect(testReportA.passing).toEqual(this.passingFilesA);
+      expect(testReportA.failing).toEqual(this.passingFilesB);
 
       let testReportB = report[1];
       expect(testReportB.src).toBe(this.testLintPackageB.src);
       expect(testReportB.files).toBe(this.testLintPackageB.files);
       expect(testReportB.matcherName).toBe(this.testLintPackageB.matcherName);
       expect(testReportB.matcherDescription).toBe(this.testMatcherB.description);
-      expect(testReportB.passing.toJS()).toEqual(this.passingFilesB);
-      expect(testReportB.failing.toJS()).toEqual(this.passingFilesA);
+      expect(testReportB.passing).toEqual(this.passingFilesB);
+      expect(testReportB.failing).toEqual(this.passingFilesA);
 
+    });
+
+    it('does not turn passing/failing arrays into Lists', function() {
+      var report = linter.lint([this.testLintPackageA]);
+      expect(report[0].passing.constructor.name).toBe('Array');
+      expect(report[0].failing.constructor.name).toBe('Array');
+    });
+
+    it('always returns passing/failing as arrays', function() {
+      var report = linter.lint([LintPackage({matcherName: 'kebabcase'})]);
+      expect(report[0].passing.constructor.name).toBe('Array');
+      expect(report[0].failing.constructor.name).toBe('Array');
     });
   });
 

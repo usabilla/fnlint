@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const matchers = require('../../lib/services/matchers');
 const LintPackage = require('../../lib/models/lint-package.js');

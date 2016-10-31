@@ -1,22 +1,25 @@
+'use strict';
+
 /* eslint-disable no-console */
 const _ = require('lodash');
 const reporters = require('../../lib/services/reporters');
+const LintPackage = require('../../lib/models/lint-package');
 
 describe('reporters', () => {
 
   describe('consoleReporter', () => {
     const consoleReporter = reporters.consoleReporter;
     beforeEach(function() {
-      spyOn(console, 'log');
+      spyOn(consoleReporter, 'log');
       this.mostRecentLog = function() {
-        return _.get(console.log.calls.mostRecent(), 'args.0');
+        return _.get(consoleReporter.log.calls.mostRecent(), 'args.0');
       }
     });
 
     describe('main reporter function', () => {
       beforeEach(function() {
-        this.reportA = {src: 'a', failing: ['b','c']};
-        this.reportB = {src: 'b', failing: ['c']};
+        this.reportA = LintPackage({src: 'a', files: ['b', 'c', 'd', 'e', 'f'], failing: ['b', 'c'], passing: ['d', 'e', 'f']});
+        this.reportB = LintPackage({src: 'b', files: ['c', 'd', 'e'], failing: ['c'], passing: ['d', 'e']});
         this.reports = [this.reportA, this.reportB];
       });
 
@@ -28,32 +31,30 @@ describe('reporters', () => {
         expect(consoleReporter.groupReporter.calls.argsFor(1)).toEqual([this.reportB]);
       });
 
-      it('it reports the total number of failing files', function() {
+      it('it reports the number failing and passing files', function() {
         consoleReporter(this.reports);
-        expect(this.mostRecentLog()).toContain('3 failing files');
+        expect(this.mostRecentLog()).toContain('8 files');
+        expect(this.mostRecentLog()).toContain('3 failing');
       });
+
     });
 
     describe('::groupReporter', () => {
       beforeEach(function() {
-        this.groupResults = {
+        this.groupResults = LintPackage({
           src: '*.js',
           matcherDescription: 'camel case',
+          files: [],
           passing: [],
           failing: []
-        };
+        });
       });
 
       describe('when there are failing tests', () => {
         beforeEach(function() {
-          this.groupResults.failing = [
-            'bar-baz.js',
-            'baz-qux.js'
-          ];
-        });
-
-        it('returns the number of failing files', function() {
-          expect(consoleReporter.groupReporter(this.groupResults)).toBe(2);
+          let files = ['bar-baz.js', 'baz-qux.js'];
+          this.groupResults = this.groupResults.set('files', files);
+          this.groupResults = this.groupResults.set('failing', files);
         });
 
         it('logs a header with failing tests for given test', function() {
@@ -65,15 +66,9 @@ describe('reporters', () => {
         });
       });
 
-      describe('when no tests are failing', () => {
-        it('reports nothing', function() {
-          consoleReporter.groupReporter(this.groupResults);
-          expect(console.log).not.toHaveBeenCalled();
-        });
-
-        it('returns 0', function() {
-          expect(consoleReporter.groupReporter(this.groupResults)).toBe(0);
-        });
+      it('when there are no files for a lintPackage it reports a warning', function() {
+        consoleReporter.groupReporter(this.groupResults);
+        expect(this.mostRecentLog()).toContain('warning: *.js did not match any files');
       });
 
     });

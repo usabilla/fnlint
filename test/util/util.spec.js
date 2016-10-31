@@ -1,3 +1,5 @@
+'use strict';
+
 const util = require('../../lib/util/util');
 
 describe('util', () => {
