@@ -1,7 +1,7 @@
 # fnlint
 Lint file name formatting.
 
-[![CircleCI branch](https://img.shields.io/circleci/project/github/usabilla/fnlint/master.svg?style=flat-square)](https://circleci.com/gh/usabilla/fnlint/tree/master) [![Coveralls branch](https://img.shields.io/coveralls/usabilla/fnlint/master.svg?style=flat-square)](https://coveralls.io/github/usabilla/fnlint?branch=master) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/fnlint)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/usabilla/fnlint/master.svg?style=flat-square)](https://circleci.com/gh/usabilla/fnlint/tree/master) [![Coveralls branch](https://img.shields.io/coveralls/usabilla/fnlint/master.svg?style=flat-square)](https://coveralls.io/github/usabilla/fnlint?branch=master) [![npm](https://img.shields.io/npm/v/fnlint.svg?style=flat-square)](https://www.npmjs.com/package/fnlint)
 
 ## Installation
 
