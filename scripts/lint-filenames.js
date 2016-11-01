@@ -4,7 +4,6 @@
 const _ = require('lodash');
 const fnlint = require('../lib/fnlint');
 
-
 fnlint({
   '{lib,test}/!(test-files)/**/*': 'kebabcase'
 }, (err, results) => {
