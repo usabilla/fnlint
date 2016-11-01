@@ -1,5 +1,5 @@
 {
-  "name": "file-name-linter",
+  "name": "fnlint",
   "version": "0.0.0",
   "description": "Lint file name formatting",
   "main": "lib/fnlint.js",
@@ -10,7 +10,7 @@
     "test": "./scripts/test.sh"
   },
   "repository": {
-    "url": "git@github.com:usabilla/file-name-linter.git",
+    "url": "git@github.com:usabilla/fnlint.git",
     "type": "git"
   },
   "author": {
