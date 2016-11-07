@@ -1,6 +1,6 @@
 {
   "name": "fnlint",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lint file name formatting",
   "main": "lib/fnlint.js",
   "engines": {
