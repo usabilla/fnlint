@@ -99,6 +99,7 @@ describe('util', () => {
   describe('isPrivateKebabCase', () => {
     it('matches file names correctly', function() {
       expect(util.isPrivateKebabCase('_this-matches')).toBe(true);
+      expect(util.isPrivateKebabCase('_feedback-item-grid')).toBe(true);
       expect(util.isPrivateKebabCase('this-does-not-match')).toBe(false);
     });
     it('is false for non-string values', function() {
