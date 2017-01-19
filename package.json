@@ -1,14 +1,8 @@
 {
   "name": "fnlint",
-  "version": "0.1.1",
-  "description": "Lint file name formatting",
-  "main": "lib/fnlint.js",
-  "engines": {
-    "node": ">=4.0.0"
-  },
-  "scripts": {
-    "test": "./scripts/test.sh"
-  },
+  "version": "1.0.0",
+  "description": "File name format linter",
+  "main": "index.js",
   "repository": {
     "url": "git@github.com:usabilla/fnlint.git",
     "type": "git"
@@ -17,19 +11,20 @@
     "name": "Usabilla",
     "email": "development@usabilla.com"
   },
-  "license": "MIT",
-  "dependencies": {
-    "colors": "^1.1.2",
-    "glob": "^7.1.1",
-    "immutable": "^3.8.1",
-    "lodash": "^4.16.6"
+  "scripts": {
+    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
+    "test:watch": "watch 'npm test' ./lib ./test",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "start": "node ."
   },
   "devDependencies": {
-    "coveralls": "^2.11.14",
-    "eslint": "^3.8.1",
-    "istanbul": "^0.4.5",
+    "@usabilla/js-styleguide": "^1.0.0",
+    "eslint": "^3.12.1",
     "jasmine": "^2.5.2",
-    "jasmine-reporters": "^2.2.0",
-    "proxyquire": "^1.7.10"
-  }
+    "jasmine-spec-reporter": "^3.1.0",
+    "lodash": "^4.12.0",
+    "watch": "^1.0.1"
+  },
+  "license": "MIT"
 }
