@@ -1,8 +1,8 @@
 {
   "spec_dir": "test",
-  "spec_files": ["**/*.spec.js"],
   "helpers": [
-    "test-setup.js"
+    "_helpers/**/*.js"
   ],
-  "ramdom": true
+  "spec_files": ["**/*.spec.js"],
+  "random": true
 }

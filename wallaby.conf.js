@@ -1,13 +1,14 @@
-'use strict';
-
-module.exports = function () {
+module.exports = function() {
   return {
-    files: ['lib/**/*.js'],
-    tests: ['test/**/*.js'],
+    files: ['lib/**/*.js', 'test/_helpers/**/*'],
+    tests: ['test/**/*.spec.js'],
     testFramework: 'jasmine',
+    setup: function() {
+      require('./test/_helpers/setup')
+    },
     env: {
       type: 'node',
-      runner: 'node'
+      // runner: 'path/to/your/node/executable'
     }
   };
 };
