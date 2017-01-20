@@ -1,5 +1,8 @@
+'use strict';
+
 const SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 const matchers = require('./matchers');
+const promiseMatchers = require('@pietvanzoen/jasmine-promise-matchers');
 
 // Custom reporter
 if (!global.wallaby) {
@@ -16,5 +19,6 @@ if (!global.wallaby) {
 
 // Custom Matchers
 beforeEach(function() {
+  promiseMatchers.install(jasmine);
   jasmine.getEnv().addMatchers(matchers);
 });

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function() {
   return {
     files: ['lib/**/*.js', 'test/_helpers/**/*'],
@@ -7,8 +9,7 @@ module.exports = function() {
       require('./test/_helpers/setup')
     },
     env: {
-      type: 'node',
-      // runner: 'path/to/your/node/executable'
+      type: 'node'
     }
   };
 };

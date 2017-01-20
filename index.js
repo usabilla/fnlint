@@ -1,3 +1,3 @@
-const App = require('./lib/app');
+'use strict';
 
-(new App()).foo();
+module.exports = require('./lib/module');

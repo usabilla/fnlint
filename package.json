@@ -13,18 +13,30 @@
   },
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
+    "test:coverage": "./scripts/test.sh",
     "test:watch": "watch 'npm test' ./lib ./test",
     "lint": "eslint .",
+    "lint:fn": "./scripts/lint-filenames.js",
     "lint:fix": "npm run lint -- --fix",
     "start": "node ."
   },
   "devDependencies": {
+    "@pietvanzoen/jasmine-promise-matchers": "^0.2.1",
     "@usabilla/js-styleguide": "^1.0.0",
+    "coveralls": "^2.11.15",
     "eslint": "^3.12.1",
+    "istanbul": "^0.4.5",
     "jasmine": "^2.5.2",
     "jasmine-spec-reporter": "^3.1.0",
-    "lodash": "^4.12.0",
     "watch": "^1.0.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "glob": "^7.1.1",
+    "glob-promise": "^3.1.0",
+    "immutable": "^3.8.1",
+    "lodash": "^4.12.0"
+  }
 }
