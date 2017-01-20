@@ -1,3 +1,9 @@
 {
-  "extends": "./node_modules/@usabilla/js-styleguide/eslint-config-usabilla/index.js"
+  "extends": "./node_modules/@usabilla/js-styleguide/eslint-config-usabilla/index.js",
+  "rules": {
+    "strict": [
+      "error",
+      "global"
+    ]
+  }
 }

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 'use strict';
 
-const _ = require('lodash');
-const fnlint = require('../lib/fnlint');
+const assert = require('assert');
+const fnlint = require('../index');
+const path = require('path');
 
-fnlint({
-  '{lib,test}/!(test-files)/**/*': 'kebabcase'
-}, (err, results) => {
-  if (_.flatten(_.map(results, 'failing')).length > 0) {
+fnlint({basePath: path.join(__dirname, '../lib'), files: '**/*', format: 'kebabcase'}, (err, results) => {
+  assert.ifError(err);
+  if (!results.ok) {
     process.exit(1);
   }
 });
