@@ -38,6 +38,18 @@ describe('fnlint', function() {
         expect(results.failing).toContain('/dirOne/test-file-four.js');
       });
     });
+
+    it('does not include directories when glob pattern is **/*', function(done) {
+      const config = _.defaults({
+        files: '**/*',
+        format: 'kebabcase',
+        directories: true
+      }, TEST_CONFIG);
+      expect(fnlint.promise(config)).toResolve(done, function(results) {
+        expect(results.ok).toBe(false);
+        expect(results.failing).not.toContain('/dirOne');
+      });
+    });
   });
 
   describe('async', function() {
