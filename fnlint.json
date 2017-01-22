@@ -1,0 +1,6 @@
+{
+  "basePath": "./lib/",
+  "files": "**/*",
+  "format": "kebabcase",
+  "directories": true
+}
