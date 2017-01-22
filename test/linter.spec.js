@@ -35,8 +35,8 @@ describe('Linter', function() {
         pathParser: getFilePathParts,
         matcher: fooMatcher
       });
-      expect(linter.filePathTest('foo/foo/foo.png')).toBe(true);
-      expect(linter.filePathTest('foo/foo/bar.png')).toBe(false);
+      expect(linter.filePathTest('/foo/foo/foo.png')).toBe(true);
+      expect(linter.filePathTest('/foo/bar/foo.png')).toBe(false);
     });
 
     it('if no parser is passed it uses entire path', function() {
