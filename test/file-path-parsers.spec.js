@@ -13,6 +13,10 @@ describe('file-path-parsers', function() {
       expect(parsed).not.toContain('..');
     });
 
+    it('handles paths beginning with slash', function() {
+      expect(filePathParsers.fullPathParser('/foo/bar.png')).toEqual(['foo', 'bar']);
+    });
+
     it('normalizes paths', function() {
       const parsed = filePathParsers.fullPathParser('../foo/../bar/baz.png');
       expect(parsed).toContain('bar');
