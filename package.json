@@ -14,12 +14,15 @@
     "name": "Usabilla",
     "email": "development@usabilla.com"
   },
+  "bin": {
+    "fnlint": "./lib/cli.js"
+  },
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
     "test:coverage": "./scripts/test.sh",
     "test:watch": "watch 'npm test' ./lib ./test",
     "lint": "eslint .",
-    "lint:fn": "./scripts/lint-filenames.js",
+    "lint:fn": "lib/cli.js -c ./fnlint.json",
     "lint:fix": "npm run lint -- --fix",
     "start": "node .",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
