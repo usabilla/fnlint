@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const fnlint = require('../lib/module');
 
 const TEST_CONFIG = {
@@ -11,17 +12,31 @@ const TEST_CONFIG = {
 
 function expectResults(results) {
   expect(results.ok).toBe(false);
+  expect(results.passing.length).toBe(2);
   expect(results.passing).toContain('/test-file-two.js');
   expect(results.passing).toContain('/test-file-one.js');
   expect(results.passing).not.toContain('/testFileThree.js');
+  expect(results.failing.length).toBe(1);
   expect(results.failing).toContain('/testFileThree.js');
 }
 
 describe('fnlint', function() {
-
   describe('promise', function() {
     it('lints files using given file basePath, files glob, and matcher', function(done) {
       expect(fnlint.promise(TEST_CONFIG)).toResolve(done, expectResults);
+    });
+
+    it('lints directories when configured', function(done) {
+      const config = _.defaults({
+        files: '**/*.js',
+        format: 'kebabcase',
+        directories: true
+      }, TEST_CONFIG);
+      expect(fnlint.promise(config)).toResolve(done, function(results) {
+        expect(results.ok).toBe(false);
+        expect(results.failing).toContain('/testFileThree.js');
+        expect(results.failing).toContain('/dirOne/test-file-four.js');
+      });
     });
   });
 

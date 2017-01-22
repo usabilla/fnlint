@@ -37,6 +37,7 @@ yarn add fnlint
 - **`files`** Glob string for files to lint relative to base path.
 - **`format`** File name format.
 - **`reporter`** (optional) Set to false to turn off console reporter.
+- **`directories`** (optional) Set to true to lint full path including directory names.
 
 ### Results
 
