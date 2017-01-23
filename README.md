@@ -19,7 +19,15 @@ yarn add fnlint
 
 ## Usage
 
-### API
+### Command Line
+
+Create a config file (an object exporting `.js` file or `.json`) with your fnlint configuration. See Options below. Then call `fnlint` referencing the config file:
+
+```bash
+fnlint --config fnlint.json
+```
+
+### Module
 
 #### `fnlint(options: {}, callback: Function(error: Error, results: {})) => Void`
 - run linter on given options
@@ -31,21 +39,13 @@ yarn add fnlint
 #### `fnlint.promise(options: {}) => Promise(results: {})`
 - promise version
 
-### Options
-
-- **`basePath`** Base path for files to lint.
-- **`files`** Glob string for files to lint relative to base path.
-- **`format`** File name format.
-- **`reporter`** (optional) Set to false to turn off console reporter.
-- **`directories`** (optional) Set to true to lint full path including directories.
-
-### Results
+#### Results
 
 - **`ok`** Boolean pass value. `true` if all files pass. 
 - **`passing`** Array of passing file paths. 
 - **`failing`** Array of failing file paths.
 
-### Examples
+#### Example
 
 ```js
 fnlint({
@@ -60,7 +60,20 @@ fnlint({
 });
 ````
 
+### Options
+
+- **`basePath`** Base path for files to lint.
+- **`files`** Glob string for files to lint relative to base path.
+- **`format`** File name format.
+- **`reporter`** (optional) Set to false to turn off console reporter.
+- **`directories`** (optional) Set to true to lint full path including directories.
+
+#### Available Formats
+* `kebabcase`
+* `camelcase`
+* `pascalcase`
 
 ## TODO
+- [ ] Custom file path parsers
 - [ ] Custom matchers
-- [ ] CLI
+- [x] CLI
