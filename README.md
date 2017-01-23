@@ -73,6 +73,17 @@ fnlint({
 * `camelcase`
 * `pascalcase`
 
+## Contributing
+
+Don't be shy! Submit issues (or better yet PRs) if you see anything that could be better. If you're submitting code that contains patches or features please try to include unit tests. Thanks!
+
+### Commit Messages
+Please use the [angular changelog convention](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md) for your commit messages.
+
+## License
+
+MIT : http://opensource.org/licenses/MIT
+
 ## TODO
 - [ ] Custom file path parsers
 - [ ] Custom matchers
