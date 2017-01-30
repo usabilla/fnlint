@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@pietvanzoen/jasmine-promise-matchers": "^0.2.1",
-    "@usabilla/js-styleguide": "^1.0.0",
+    "@usabilla/js-styleguide": "1.1.0",
     "commitizen": "^2.9.5",
     "condition-circle": "^1.5.0",
     "conventional-commit-types": "^2.1.0",
