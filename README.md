@@ -69,9 +69,9 @@ fnlint({
 - **`directories`** (optional) Set to true to lint full path including directories.
 
 #### Available Formats
-* `kebabcase`
-* `camelcase`
-* `pascalcase`
+* `kebabcase` (e.g. `kebab-case.js`)
+* `camelcase` (e.g. `camelCase.js`)
+* `pascalcase` (e.g. `PascalCase.js`)
 
 ## Contributing
 
