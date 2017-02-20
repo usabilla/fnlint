@@ -72,6 +72,7 @@ fnlint({
 * `kebabcase` (e.g. `kebab-case.js`)
 * `camelcase` (e.g. `camelCase.js`)
 * `pascalcase` (e.g. `PascalCase.js`)
+* `snakecase` (e.g. `snake_case.rb`)
 
 ## Contributing
 

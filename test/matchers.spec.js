@@ -61,4 +61,21 @@ describe('matchers', function() {
     });
   });
 
+  describe('snakecase', function() {
+    it('matches file names correctly', function() {
+      expect(matchers.snakecase('foobarbaz')).toBe(true);
+      expect(matchers.snakecase('foo_bar_baz')).toBe(true);
+      expect(matchers.snakecase('kabab-case-example')).toBe(false);
+      expect(matchers.snakecase('PasCalCaseExample')).toBe(false);
+      expect(matchers.snakecase('camelCaseExample')).toBe(false);
+      expect(matchers.snakecase('Foo-bar-Baz')).toBe(false);
+      expect(matchers.snakecase('foO_bar-Baz')).toBe(false);
+      expect(matchers.snakecase('_does-not-match')).toBe(false);
+      expect(matchers.snakecase('does-not-match_')).toBe(false);
+      expect(matchers.snakecase('i-does-match')).toBe(false);
+    });
+    it('is false for non-string values', function() {
+      expect(matchers.snakecase(null)).toBe(false);
+    });
+  });
 });
