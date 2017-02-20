@@ -14,7 +14,7 @@ npm i fnlint --save
 With yarn:
 
 ```
-yarn add fnlint 
+yarn add fnlint
 ```
 
 ## Usage
@@ -41,8 +41,8 @@ fnlint --config fnlint.json
 
 #### Results
 
-- **`ok`** Boolean pass value. `true` if all files pass. 
-- **`passing`** Array of passing file paths. 
+- **`ok`** Boolean pass value. `true` if all files pass.
+- **`passing`** Array of passing file paths.
 - **`failing`** Array of failing file paths.
 
 #### Example
