@@ -22,7 +22,7 @@ describe('Linter', function() {
     it('uses given pathParser and test to match filePath', function() {
       const linter = new Linter({
         pathParser: getFileName,
-        matcher: fooMatcher
+        matcher: fooMatcher,
       });
       expect(linter.filePathTest('foo')).toBe(true);
       expect(linter.filePathTest('foo.png')).toBe(true);
@@ -33,7 +33,7 @@ describe('Linter', function() {
     it('path parsers can return multiple strings to test', function() {
       const linter = new Linter({
         pathParser: getFilePathParts,
-        matcher: fooMatcher
+        matcher: fooMatcher,
       });
       expect(linter.filePathTest('/foo/foo/foo.png')).toBe(true);
       expect(linter.filePathTest('/foo/bar/foo.png')).toBe(false);
@@ -42,7 +42,7 @@ describe('Linter', function() {
     it('if no parser is passed it uses entire path', function() {
       const matcher = jasmine.createSpy('matcher');
       const linter = new Linter({
-        matcher: matcher
+        matcher: matcher,
       });
       linter.filePathTest('foo/bar.png');
       expect(matcher).toHaveBeenCalledWith('foo/bar.png');
@@ -53,7 +53,7 @@ describe('Linter', function() {
     it('lints failing files and returns results object from file linting', function() {
       const linter = new Linter({
         pathParser: getFileName,
-        matcher: fooMatcher
+        matcher: fooMatcher,
       });
 
       const result = linter.lint(['foo', 'foo', 'bar']);
@@ -66,7 +66,7 @@ describe('Linter', function() {
     it('lints passing files and returns results object from file linting', function() {
       const linter = new Linter({
         pathParser: getFileName,
-        matcher: fooMatcher
+        matcher: fooMatcher,
       });
 
       const result = linter.lint(['foo', 'foo', 'foo']);

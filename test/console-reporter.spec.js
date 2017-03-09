@@ -13,7 +13,7 @@ describe('consoleReporter', function() {
     this.report({
       ok: true,
       passing: ['foo', 'bar'],
-      failing: []
+      failing: [],
     });
     const log = console.log.calls.mostRecent().args[0];
     expect(log).toContain('fnlint foomatcher pass');
@@ -23,7 +23,7 @@ describe('consoleReporter', function() {
     this.report({
       ok: false,
       passing: [],
-      failing: ['foo', 'bar']
+      failing: ['foo', 'bar'],
     });
     const error = console.error.calls.allArgs()[0][0];
     expect(error).toContain('failed linting');

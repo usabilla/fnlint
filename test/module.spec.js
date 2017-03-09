@@ -7,7 +7,7 @@ const TEST_CONFIG = {
   basePath: './test/_helpers/test-files',
   files: '*.js',
   format: 'kebabcase',
-  reporter: false
+  reporter: false,
 };
 
 function expectResults(results) {
@@ -30,7 +30,7 @@ describe('fnlint', function() {
       const config = _.defaults({
         files: '**/*.js',
         format: 'kebabcase',
-        directories: true
+        directories: true,
       }, TEST_CONFIG);
       expect(fnlint.promise(config)).toResolve(done, function(results) {
         expect(results.ok).toBe(false);
@@ -43,7 +43,7 @@ describe('fnlint', function() {
       const config = _.defaults({
         files: '**/*',
         format: 'kebabcase',
-        directories: true
+        directories: true,
       }, TEST_CONFIG);
       expect(fnlint.promise(config)).toResolve(done, function(results) {
         expect(results.ok).toBe(false);
