@@ -7,7 +7,7 @@ const promiseMatchers = require('@pietvanzoen/jasmine-promise-matchers');
 console.log(`Testing with Node ${process.version}`);
 
 // Custom reporter
-if (!global.wallaby) {
+if (process.env.VERBOSE) {
   jasmine.getEnv().clearReporters();
   jasmine.getEnv().addReporter(new SpecReporter({
     spec: {
