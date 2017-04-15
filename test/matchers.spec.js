@@ -3,7 +3,6 @@
 const matchers = require('../lib/matchers');
 
 describe('matchers', function() {
-
   describe('makeRegexStringTest', function() {
     it('wraps regex in a function', function() {
       var wrapped = matchers.makeRegexStringTest(/foo/);

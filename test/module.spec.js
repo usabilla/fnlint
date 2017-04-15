@@ -22,16 +22,21 @@ function expectResults(results) {
 
 describe('fnlint', function() {
   describe('promise', function() {
-    it('lints files using given file basePath, files glob, and matcher', function(done) {
+    it('lints files using given file basePath, files glob, and matcher', function(
+      done
+    ) {
       expect(fnlint.promise(TEST_CONFIG)).toResolve(done, expectResults);
     });
 
     it('lints directories when configured', function(done) {
-      const config = _.defaults({
-        files: '**/*.js',
-        format: 'kebabcase',
-        directories: true
-      }, TEST_CONFIG);
+      const config = _.defaults(
+        {
+          files: '**/*.js',
+          format: 'kebabcase',
+          directories: true
+        },
+        TEST_CONFIG
+      );
       expect(fnlint.promise(config)).toResolve(done, function(results) {
         expect(results.ok).toBe(false);
         expect(results.failing).toContain('/testFileThree.js');
@@ -39,12 +44,17 @@ describe('fnlint', function() {
       });
     });
 
-    it('does not include directories when glob pattern is **/*', function(done) {
-      const config = _.defaults({
-        files: '**/*',
-        format: 'kebabcase',
-        directories: true
-      }, TEST_CONFIG);
+    it('does not include directories when glob pattern is **/*', function(
+      done
+    ) {
+      const config = _.defaults(
+        {
+          files: '**/*',
+          format: 'kebabcase',
+          directories: true
+        },
+        TEST_CONFIG
+      );
       expect(fnlint.promise(config)).toResolve(done, function(results) {
         expect(results.ok).toBe(false);
         expect(results.failing).not.toContain('/dirOne');
@@ -53,7 +63,9 @@ describe('fnlint', function() {
   });
 
   describe('async', function() {
-    it('lints files using given file basePath, files glob, and matcher', function(done) {
+    it('lints files using given file basePath, files glob, and matcher', function(
+      done
+    ) {
       fnlint(TEST_CONFIG, (err, results) => {
         if (err) {
           return done.fail(err);
@@ -70,5 +82,4 @@ describe('fnlint', function() {
       expectResults(results);
     });
   });
-
 });

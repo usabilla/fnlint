@@ -3,7 +3,6 @@
 const filePathParsers = require('../lib/file-path-parsers');
 
 describe('file-path-parsers', function() {
-
   describe('fullPathParser', function() {
     it('trims relative path segments', function() {
       const parsed = filePathParsers.fullPathParser('./../foo/bar.png');
@@ -14,7 +13,10 @@ describe('file-path-parsers', function() {
     });
 
     it('handles paths beginning with slash', function() {
-      expect(filePathParsers.fullPathParser('/foo/bar.png')).toEqual(['foo', 'bar']);
+      expect(filePathParsers.fullPathParser('/foo/bar.png')).toEqual([
+        'foo',
+        'bar'
+      ]);
     });
 
     it('normalizes paths', function() {
@@ -26,5 +28,4 @@ describe('file-path-parsers', function() {
       expect(parsed).not.toContain('..');
     });
   });
-
 });

@@ -4,7 +4,6 @@ const Linter = require('../lib/linter');
 const path = require('path');
 
 describe('Linter', function() {
-
   function fooMatcher(name) {
     return name === 'foo';
   }
@@ -77,5 +76,4 @@ describe('Linter', function() {
       expect(result.failing.length).toBe(0);
     });
   });
-
 });

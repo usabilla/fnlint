@@ -9,14 +9,16 @@ console.log(`Testing with Node ${process.version}`);
 // Custom reporter
 if (process.env.VERBOSE) {
   jasmine.getEnv().clearReporters();
-  jasmine.getEnv().addReporter(new SpecReporter({
-    spec: {
-      displayPending: true
-    },
-    summary: {
-      displayPending: false
-    }
-  }));
+  jasmine.getEnv().addReporter(
+    new SpecReporter({
+      spec: {
+        displayPending: true
+      },
+      summary: {
+        displayPending: false
+      }
+    })
+  );
 }
 
 // Custom Matchers
