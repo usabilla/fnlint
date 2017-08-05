@@ -36,7 +36,7 @@
     "conventional-commit-types": "^2.1.0",
     "coveralls": "^2.11.15",
     "cz-conventional-changelog": "^1.2.0",
-    "eslint": "^3.12.1",
+    "eslint": "^4.4.0",
     "git-hooks": "^1.1.7",
     "istanbul": "^0.4.5",
     "jasmine": "^2.5.2",
