@@ -22,6 +22,7 @@ describe('matchers', function() {
       expect(matchers.pascalcase('Pascalcase')).toBe(true);
       expect(matchers.pascalcase('NPSCampaignCell')).toBe(true);
       expect(matchers.pascalcase('FooNPSCampaignCell')).toBe(true);
+      expect(matchers.pascalcase('4FileN4meW1thNumbers')).toBe(true);
       expect(matchers.pascalcase('camelCaseExample')).toBe(false);
       expect(matchers.pascalcase('kabab-case-example')).toBe(false);
       expect(matchers.pascalcase('Foo-barBaz_')).toBe(false);
@@ -36,6 +37,7 @@ describe('matchers', function() {
       expect(matchers.camelcase('camelCaseExample')).toBe(true);
       expect(matchers.camelcase('foobar')).toBe(true);
       expect(matchers.camelcase('PasCalCaseExample')).toBe(false);
+      expect(matchers.camelcase('4fileN3meW1thNumbers')).toBe(true);
       expect(matchers.camelcase('kabab-case-example')).toBe(false);
       expect(matchers.camelcase('_fooBarBaz')).toBe(false);
     });
@@ -48,6 +50,7 @@ describe('matchers', function() {
     it('matches file names correctly', function() {
       expect(matchers.kebabcase('kabab-case-example')).toBe(true);
       expect(matchers.kebabcase('foobarbaz')).toBe(true);
+      expect(matchers.kebabcase('4file-n4me-w1th-numbers')).toBe(true);
       expect(matchers.kebabcase('PasCalCaseExample')).toBe(false);
       expect(matchers.kebabcase('camelCaseExample')).toBe(false);
       expect(matchers.kebabcase('Foo-bar-Baz')).toBe(false);
@@ -66,6 +69,7 @@ describe('matchers', function() {
       expect(matchers.snakecase('foobarbaz')).toBe(true);
       expect(matchers.snakecase('foo_bar_baz')).toBe(true);
       expect(matchers.snakecase('kabab-case-example')).toBe(false);
+      expect(matchers.snakecase('4file_n4me_w1th_numbers')).toBe(true);
       expect(matchers.snakecase('PasCalCaseExample')).toBe(false);
       expect(matchers.snakecase('camelCaseExample')).toBe(false);
       expect(matchers.snakecase('Foo-bar-Baz')).toBe(false);
