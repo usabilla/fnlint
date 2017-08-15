@@ -40,7 +40,7 @@
     "git-hooks": "^1.1.7",
     "istanbul": "^0.4.5",
     "jasmine": "^2.5.2",
-    "jasmine-spec-reporter": "^3.1.0",
+    "jasmine-spec-reporter": "^4.2.1",
     "semantic-release": "^6.3.2",
     "validate-commit-msg": "^2.9.0",
     "watch": "^1.0.1"
