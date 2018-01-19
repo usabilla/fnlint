@@ -17,3 +17,8 @@ test:
     - yarn lint:fn
   post:
     - DEBUG=condition yarn semantic-release || true
+
+general:
+  branches:
+    only:
+     - /feature-.*/ # or regexes
