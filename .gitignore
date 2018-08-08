@@ -40,3 +40,4 @@ jspm_packages
 .idea
 
 /_test-results/
+/reports/
