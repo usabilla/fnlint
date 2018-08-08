@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - v1-dependency-cache-{{ checksum "yarn.lock" }}
+          - v1-dependency-cache-
+    - run: yarn install
+    - save_cache:
+        key: v1-dependency-cache-{{ checksum "yarn.lock" }}
+        paths:
+          - node_modules
+    - run: yarn test:coverage --dir=reports
+    - store_test_results:
+        path: reports
+    - store_artifacts:
+        path: reports
+    - run:
+        command: |
+          cat ./reports/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - run: yarn lint
+    - run: yarn lint:fn
+    - run: DEBUG=condition yarn semantic-release || true

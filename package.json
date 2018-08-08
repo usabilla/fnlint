@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
-    "test:coverage": "./scripts/test.sh",
+    "test:coverage": "istanbul cover jasmine JASMINE_CONFIG_PATH=jasmine.json",
     "test:watch": "watch 'npm test' ./lib ./test",
     "lint": "eslint .",
     "lint:fn": "lib/cli.js -c ./fnlint.json",
