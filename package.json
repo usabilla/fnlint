@@ -34,7 +34,7 @@
     "commitizen": "^2.9.5",
     "condition-circle": "^1.5.0",
     "conventional-commit-types": "^2.1.0",
-    "coveralls": "^2.11.15",
+    "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^1.2.0",
     "eslint": "^3.12.1",
     "git-hooks": "^1.1.7",
